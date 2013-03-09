@@ -27,7 +27,6 @@
         twiceThdIntL = nthDR 3 zIntegerL >=> mapHole twice >=> guarded (nthDR 2 zIntegerL >=> twiceThdIntL)
 
 - >
-
         t_2 = testZp (twiceThdIntL >=> fz) z3  -- >  (1, (2, 6), 4, 5, 12)
 
 - Insert debug-printing before each bind inside do's (just for IO for simplicity)
