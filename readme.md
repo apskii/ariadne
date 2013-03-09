@@ -7,8 +7,8 @@ z3 = zp [| (1, (2, 3), 4, 5, 6)  |]
 z4 = zp [| do putStrLn "rrrr"
               x <- getLine
               y <- do putStrLn "meaw"
-                     z <- getLine
-                     return z
+                      z <- getLine
+                      return z
               putStrLn (x ++ y)
         |]
 ```
