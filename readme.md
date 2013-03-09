@@ -15,7 +15,7 @@
 
         sndLit = nthDR 2 zLit >=> up >=> zExp
 
->
+- >
         t_1_1 = testZp sndLit z1  -- >   2
         t_1_2 = testZp sndLit z2  -- >  "b"
         t_1_3 = testZp sndLit z3  -- >   2
@@ -26,7 +26,7 @@
 
         twiceThdIntL = nthDR 3 zIntegerL >=> mapHole twice >=> guarded (nthDR 2 zIntegerL >=> twiceThdIntL)
 
->
+- >
         t_2 = testZp (twiceThdIntL >=> fz) z3  -- >  (1, (2, 6), 4, 5, 12)
 
 - Insert debug-printing before each bind inside do's (just for IO for simplicity)
@@ -38,7 +38,7 @@
           BindS pat _ ← getHole zH
           up zH >>= mapHole (insDbgPrint ("Binding " ++ show pat ++ "..."))
                 >>= guarded (nextDR zBindS >=> moveDR >=> insBindDbgPrint)
->
+- >
         t_3 = testZp (insBindDbgPrint >=> fz) z4
         {-- >
         do System.IO.putStrLn "rrrr"
