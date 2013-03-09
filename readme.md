@@ -5,9 +5,9 @@ z1 = zp [| Just ((1, 2, 3), "4") |]
 z2 = zp [| ["a", "b", "c", "d"]  |]
 z3 = zp [| (1, (2, 3), 4, 5, 6)  |]
 z4 = zp [| do putStrLn "rrrr"
-              x ← getLine
-              y ← do putStrLn "meaw"
-                     z ← getLine
+              x <- getLine
+              y <- do putStrLn "meaw"
+                     z <- getLine
                      return z
               putStrLn (x ++ y)
         |]
@@ -20,9 +20,9 @@ sndLit = nthDR 2 zLit >=> up >=> zExp
 ```
 
 ```haskell
-t_1_1 = testZp sndLit z1  -->   2
-t_1_2 = testZp sndLit z2  -->  "b"
-t_1_3 = testZp sndLit z3  -->   2
+testZp sndLit z1  -->   2
+testZp sndLit z2  -->  "b"
+testZp sndLit z3  -->   2
 ```
 
 Replace every third integer literal with twice as large literal:
@@ -34,7 +34,7 @@ twiceThdIntL = nthDR 3 zIntegerL >=> mapHole twice >=> guarded (nthDR 2 zInteger
 ```
 
 ```haskell
-t_2 = testZp (twiceThdIntL >=> fz) z3  -->  (1, (2, 6), 4, 5, 12)
+testZp (twiceThdIntL >=> fz) z3  -->  (1, (2, 6), 4, 5, 12)
 ```
 
 Insert debug-printing before each bind inside do's (just for IO for simplicity):
@@ -43,14 +43,14 @@ Insert debug-printing before each bind inside do's (just for IO for simplicity):
 insDbgPrint str = (:) $ NoBindS $ AppE (VarE $ mkName "putStrLn") (LitE $ StringL str)
 
 insBindDbgPrint z = do
-  zH          ← nextDR zBindS z
-  BindS pat _ ← getHole zH
+  zH          <- nextDR zBindS z
+  BindS pat _ <- getHole zH
   up zH >>= mapHole (insDbgPrint ("Binding " ++ show pat ++ "..."))
         >>= guarded (nextDR zBindS >=> moveDR >=> insBindDbgPrint)
 ```
 
 ```haskell
-t_3 = testZp (insBindDbgPrint >=> fz) z4
+testZp (insBindDbgPrint >=> fz) z4
 -->
 do System.IO.putStrLn "rrrr"
    putStrLn "Binding VarP x_0..."
