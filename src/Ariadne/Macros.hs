@@ -1,4 +1,4 @@
-{-# LANGUAGE TemplateHaskell, UnicodeSyntax #-}
+﻿{-# LANGUAGE TemplateHaskell #-}
 
 module Ariadne.Macros where
 
@@ -8,13 +8,13 @@ import Control.Monad
 
 justE e = [| Just $e |]
 
-cmatch ∷ Q Exp → Q Exp
+cmatch :: Q Exp -> Q Exp
 cmatch exp = do
-  ConE conNm ← exp
-  varNm      ← newName "e"
+  ConE conNm <- exp
+  varNm      <- newName "e"
   lamCaseE [ match (asP varNm $ recP conNm []) (normalB $ justE $ varE varNm) []
            , match wildP (normalB [| Nothing |]) []
            ]
 
-zmatch ∷ Q Exp → Q Exp
+zmatch :: Q Exp -> Q Exp
 zmatch exp = [| getHole >=> $(cmatch exp) |]

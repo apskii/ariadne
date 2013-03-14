@@ -1,4 +1,4 @@
-{-# LANGUAGE TemplateHaskell, UnicodeSyntax #-}
+﻿{-# LANGUAGE TemplateHaskell #-}
 
 module Ariadne.AST where
 
@@ -7,7 +7,7 @@ import Ariadne.Macros
 import Language.Haskell.TH
 import Data.Generics.Zipper
 
-zLit ∷ Query h Lit
+zLit :: Query h Lit
 zLit = getHole
 
 zCharL       = $(zmatch [| CharL       |])
@@ -20,8 +20,7 @@ zFloatPrimL  = $(zmatch [| FloatPrimL  |])
 zDoublePrimL = $(zmatch [| DoublePrimL |])
 zStringPrimL = $(zmatch [| StringPrimL |])
 
-
-zExp ∷ Query h Exp
+zExp :: Query h Exp
 zExp = getHole
 
 zVarE        = $(zmatch [| VarE        |])
@@ -47,23 +46,16 @@ zSigE        = $(zmatch [| SigE        |])
 zRecConE     = $(zmatch [| RecConE     |])
 zRecUpdE     = $(zmatch [| RecUpdE     |])
 
-
-zMatch ∷ Query h Match
+zMatch :: Query h Match
 zMatch = getHole
 
-
-
-zBody ∷ Query h Body
+zBody :: Query h Body
 zBody = getHole
 
-
-
-zGuard ∷ Query h Guard
+zGuard :: Query h Guard
 zGuard = getHole
 
-
-
-zStmt ∷ Query h Stmt
+zStmt :: Query h Stmt
 zStmt = getHole
 
 zBindS   = $(zmatch [| BindS   |])
@@ -71,7 +63,5 @@ zLetS    = $(zmatch [| LetS    |])
 zNoBindS = $(zmatch [| NoBindS |])
 zParS    = $(zmatch [| ParS    |])
 
-
-
-zRange ∷ Query h Range
+zRange :: Query h Range
 zRange = getHole
